@@ -1,0 +1,32 @@
+# fly.toml file generated for ceramic on 2022-12-05T15:05:49-05:00
+
+app = "ceramic"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  CERAMIC_ENABLE_EXPERIMENTAL_COMPOSE_DB = "true"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[mounts]
+  destination = "/ceramic_data"
+  source = "ceramic_data"
+
+[[services]]
+  http_checks = []
+  internal_port = 7007
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 7007
